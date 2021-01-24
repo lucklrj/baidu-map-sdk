@@ -3,7 +3,7 @@ package baidu_map_sdk
 import (
 	"crypto/md5"
 	"fmt"
-	netUrl "net/url"
+	"net/url"
 
 	"github.com/ddliu/go-httpclient"
 )
@@ -15,7 +15,7 @@ type Client struct {
 	isNeedSn   bool
 }
 
-func (c *Client) call(uri string, data netUrl.Values) string {
+func (c *Client) call(uri string, data url.Values) string {
 	data.Add("output", "json")
 	data.Add("ak", c.ak)
 	if c.isNeedSn == true {
@@ -41,8 +41,8 @@ func New(ak string, sk string, isNeedSn bool) *Client {
 		isNeedSn:   isNeedSn,
 	}
 }
-func getSn(url string, data netUrl.Values, sk string) string {
+func getSn(uri string, data url.Values, sk string) string {
 	//todo post的时候需要按key排序
 	query := data.Encode()
-	return fmt.Sprintf("%x", md5.Sum([]byte(netUrl.QueryEscape(url+"?"+query+sk))))
+	return fmt.Sprintf("%x", md5.Sum([]byte(url.QueryEscape(uri+"?"+query+sk))))
 }
