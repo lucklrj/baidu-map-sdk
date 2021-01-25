@@ -12,6 +12,9 @@ func main() {
 	client := baiduSDK.New(ak, sk, true)
 
 	address := "百度大厦"
-	result := client.GetLngAndLatByAddress(address)
-	fmt.Println(result)
+	lat, lng := client.GetLngAndLatByAddress(address)
+	fmt.Println(lat, lng)
+
+	client.GetAddressByLngAndLat(lat, lng)
+
 }
